@@ -31,7 +31,7 @@ st.title("تطبيق أمان")
 st.write("أهلاً بك! إما أن تضغط على زر المايك وتتحدث، أو تكتب الرسالة في المربع.")
 
 # 1. زر التسجيل الصوتي
-audio_bytes = audio_recorder(text="اضغط على المايك وتحدث", recording_color="#e83e2a", neutral_color="#0e2a47", icon_size="2x")
+audio_bytes = audio_recorder(text="اضغط على المايك وتحدث", recording_color="#e83e2a", neutral_color="#ffffff", icon_size="2x")
 
 message = ""
 
