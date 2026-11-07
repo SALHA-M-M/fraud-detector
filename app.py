@@ -1,9 +1,9 @@
 import streamlit as st
 
 # إعدادات الصفحة
-st.set_page_config(page_title="حماية كبار السن", page_icon="🛡️")
+st.set_page_config(page_title="امان", page_icon="🛡️")
 
-st.title("🛡️ مساعد الحماية من الاحتيال")
+st.title("🛡️تطبيق امان")
 st.write("أهلاً بك! الصق الرسالة المشبوهة هنا وسنقوم بتحليلها.")
 
 # مربع لكتابة الرسالة
