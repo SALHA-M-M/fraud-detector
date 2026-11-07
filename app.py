@@ -14,6 +14,7 @@ hide_streamlit_style = """
                 font-size: 20px !important;
                 text-align: right;
             }
+[data-testid="stStatusWidget"] {visibility:hidden;}
             </style>
             """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
