@@ -90,9 +90,30 @@ if st.button("تحليل الرسالة", use_container_width=True):
             st.warning("⚠️ **تحذير: هذه الرسالة مشبوهة.**")
             st.write("**الأسباب:**")
             for r in reasons: st.write(f"- {r}")
-            components.html("""<script>var msg = new SpeechSynthesisUtterance(); msg.text = "تحذير! هذه الرسالة مشبوهة."; msg.lang = "ar-SA"; window.speechSynthesis.speak(msg);</script>""", height=0)
+# 4. إعطاء النتيجة
+            if score >= 6:
+                st.error("🚨 **احترس! هذه الرسالة احتيال بشكل مؤكد.**")
+                st.write("**الأسباب:**")
+                for r in reasons: st.write(f"- {r}")
+                st.write("**نصيحة:** لا تضغط على أي روابط، ولا ترسل أي معلومات بنكية أو رمز تحقق (OTP).")
+               
+                if st.button("🔊", use_container_width=True):
+                    components.html("""<script>var msg = new SpeechSynthesisUtterance(); msg.text = "تحذير! هذه الرسالة احتيال. لا تضغط على أي رابط."; msg.lang = "ar-SA"; window.speechSynthesis.speak(msg);</script>""", height=0)
+
+            elif score >= 3:
+                st.warning("⚠️ **تحذير: هذه الرسالة مشبوهة.**")
+                st.write("**الأسباب:**")
+                for r in reasons: st.write(f"- {r}")
+                st.write("**نصيحة:** تواصل مع الجهة المرسلة عبر رقمها الرسمي للتأكد.")
+               
+                if st.button("🔊", use_container_width=True):
+                    components.html("""<script>var msg = new SpeechSynthesisUtterance(); msg.text = "تحذير! هذه الرسالة مشبوهة. يرجى الحذر."; msg.lang = "ar-SA"; window.speechSynthesis.speak(msg);</script>""", height=0)
+
+            else:
+                st.success("✅ **الرسالة تبدو آمنة.**")
+                st.write("ولكن تذكر دائماً عدم مشاركة معلوماتك الشخصية.")
+               
+                if st.button("🔊", use_container_width=True):
+                    components.html("""<script>var msg = new SpeechSynthesisUtterance(); msg.text = "الرسالة آمنة."; msg.lang = "ar-SA"; window.speechSynthesis.speak(msg);</script>""", height=0)
         else:
-            st.success("✅ **الرسالة تبدو آمنة.**")
-            components.html("""<script>var msg = new SpeechSynthesisUtterance(); msg.text = "الرسالة آمنة."; msg.lang = "ar-SA"; window.speechSynthesis.speak(msg);</script>""", height=0)
-    else:
-        st.warning("الرجاء إدخال رسالة أولاً.")
+            st.warning("الرجاء إدخال رسالة أولاً.")
