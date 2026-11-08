@@ -40,8 +40,6 @@ if audio_bytes:
     st.audio(audio_bytes, format="audio/wav")
     r = sr.Recognizer()
     try:
-        # تحويل الصوت إلى نص (نستخدم مكتبة Google للتعرف على الصوت)
-        # ملاحظة: هذه الخدمة قد تحتاج إنترنت وتأخذ ثانية للتحليل
         with sr.AudioFile(io.BytesIO(audio_bytes)) as source:
             audio_data = r.record(source)
             text_from_audio = r.recognize_google(audio_data, language="ar-SA")
@@ -51,7 +49,7 @@ if audio_bytes:
         st.error("عذراً، لم نتمكن من التعرف على الصوت. جرب الكتابة أو أعد التسجيل.")
         message = ""
 
-# 2. خيار الكتابة (يظهر دائماً كخيار بديل)
+# 2. خيار الكتابة
 message_text = st.text_area("أو اكتب الرسالة هنا:", value=message, height=100)
 if message_text:
     message = message_text
@@ -62,17 +60,20 @@ if st.button("تحليل الرسالة", use_container_width=True):
         score = 0
         reasons = []
 
+        # فحص الكلمات المفتاحية
         suspicious_words = ["جائزة", "جائزه", "فزت", "ربحت", "بنك", "الراجحي", "أرسل الرمز", "الرمز السري", "حسابك موقوف", "شحنة", "مكافأة", "عاجل", "أبشر", "تحديث بيانات", "بطاقة"]
         found_words = [word for word in suspicious_words if word in message]
-        
+       
         if found_words:
             score += 3
             reasons.append(f"وجود كلمات حساسة ({', '.join(found_words)})")
 
+        # فحص طلب معلومات سرية
         if re.search(r"(رمز|كود|OTP|OTP).*(تحقق|سري)", message, re.IGNORECASE):
             score += 4
             reasons.append("طلب رمز تحقق (OTP) أو معلومات سرية")
 
+        # فحص الروابط
         urls = re.findall(r'(https?://\S+|www\.\S+)', message)
         if urls:
             score += 2
@@ -81,24 +82,29 @@ if st.button("تحليل الرسالة", use_container_width=True):
                 score += 3
                 reasons.append("رابط مختصر مشبوه (يخفي الوجهة الحقيقية)")
 
+        # إعطاء النتيجة
         if score >= 6:
             st.error("🚨 **احترس! هذه الرسالة احتيال بشكل مؤكد.**")
             st.write("**الأسباب:**")
             for r in reasons: st.write(f"- {r}")
-            components.html("""<script>var msg = new SpeechSynthesisUtterance(); msg.text = "تحذير! هذه الرسالة احتيال. لا تضغط على أي رابط."; msg.lang = "ar-SA"; window.speechSynthesis.speak(msg);</script>""", height=0)
-      elif score >= 3:
+            st.write("**نصيحة:** لا تضغط على أي روابط، ولا ترسل أي معلومات بنكية أو رمز تحقق (OTP).")
+           
+            if st.button("🔊 اضغط لسماع التحذير", use_container_width=True):
+                components.html("""<script>var msg = new SpeechSynthesisUtterance(); msg.text = "تحذير! هذه الرسالة احتيال. لا تضغط على أي رابط."; msg.lang = "ar-SA"; window.speechSynthesis.speak(msg);</script>""", height=0)
+
+        elif score >= 3:
             st.warning("⚠️ **تحذير: هذه الرسالة مشبوهة.**")
             st.write("**الأسباب:**")
             for r in reasons: st.write(f"- {r}")
             st.write("**نصيحة:** تواصل مع الجهة المرسلة عبر رقمها الرسمي للتأكد.")
-            
+           
             if st.button("🔊 اضغط لسماع التحذير", use_container_width=True):
                 components.html("""<script>var msg = new SpeechSynthesisUtterance(); msg.text = "تحذير! هذه الرسالة مشبوهة. يرجى الحذر."; msg.lang = "ar-SA"; window.speechSynthesis.speak(msg);</script>""", height=0)
 
         else:
             st.success("✅ **الرسالة تبدو آمنة.**")
             st.write("ولكن تذكر دائماً عدم مشاركة معلوماتك الشخصية.")
-            
+           
             if st.button("🔊 اضغط لسماع النتيجة", use_container_width=True):
                 components.html("""<script>var msg = new SpeechSynthesisUtterance(); msg.text = "الرسالة آمنة."; msg.lang = "ar-SA"; window.speechSynthesis.speak(msg);</script>""", height=0)
     else:
