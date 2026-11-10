@@ -1,6 +1,6 @@
 import streamlit as st
 import re
-import streamlit.components.v1 as components
+import streamlit.component.v1 as components
 from audio_recorder_streamlit import audio_recorder
 import speech_recognition as sr
 import io
