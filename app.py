@@ -139,18 +139,20 @@ if st.button("تحليل الرسالة", use_container_width=True):
             # تشغيل ملف الصوت
             try:
                 st.audio("warning.mp3", format="audio/mp3")
-            except:
-                pass
-
-        elif score >= 3:
-            st.warning("⚠️ **تحذير: هذه الرسالة مشبوهة.**")
-            st.write("**الأسباب:**")
-            for r in reasons: st.write(f"- {r}")
-            st.write("**نصيحة:** تواصل مع الجهة المرسلة عبر رقمها الرسمي للتأكد.")
+           st.write("**نصيحة:** تواصل مع الجهة المرسلة عبر رقمها الرسمي للتأكد.")
             
             # تشغيل ملف الصوت
             try:
                 st.audio("warning.mp3", format="audio/mp3")
+            except:
+                pass
+
+        else:
+            st.success("✅ **الرسالة تبدو آمنة.**")
+            st.write("ولكن تذكر دائماً عدم مشاركة معلوماتك الشخصية.")
+            
+        else:
+            st.warning("الرجاء إدخال رسالة أولاً.")
             except:
                 pass
 
