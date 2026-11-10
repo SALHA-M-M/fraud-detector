@@ -159,3 +159,5 @@ if st.button("تحليل الرسالة", use_container_width=True):
             st.write("ولكن تذكر دائماً عدم مشاركة معلوماتك الشخصية.")
     else:
         st.warning("الرجاء إدخال رسالة أولاً.")
+
+
