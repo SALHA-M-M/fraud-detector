@@ -9,15 +9,62 @@ import io
 st.set_page_config(page_title="أمان", page_icon="🛡️", layout="centered")
 
 # إخفاء شعار Streamlit وتكبير الخط
+# تصميم التطبيق (CSS) - النسخة النهائية
 hide_streamlit_style = """
             <style>
+            /* إخفاء العناصر الافتراضية */
             #MainMenu {visibility: hidden;}
             footer {visibility: hidden;}
             header {visibility: hidden;}
             [data-testid="stStatusWidget"] {visibility: hidden;}
-            html, body, [class*="css"]  {
-                font-size: 22px !important;
+           
+            /* لون الخلفية (أبيض مائل للرمادي الفاتح) */
+            .stApp {
+                background-color: #F8F9FA;
+            }
+           
+            /* لون النصوص (أزرق داكن للقراءة المريحة) */
+            h1, h2, h3, p, label, .stMarkdown {
+                color: #0B192C !important;
                 text-align: right;
+            }
+           
+            /* تكبير الخط الأساسي */
+            html, body, [class*="css"]  {
+                font-size: 20px !important;
+                text-align: right;
+            }
+           
+            /* تنسيق الأزرار (أخضر داكن) */
+            .stButton > button {
+                background-color: #1E7D32; /* أخضر */
+                color: white;
+                border-radius: 10px;
+                padding: 12px 24px;
+                font-size: 18px;
+                border: none;
+                width: 100%;
+                font-weight: bold;
+            }
+           
+            /* تأثير عند تمرير الماوس على الزر */
+            .stButton > button:hover {
+                background-color: #145A23;
+                color: white;
+            }
+           
+            /* تنسيق مربع النص */
+            .stTextArea textarea {
+                background-color: #FFFFFF;
+                color: #0B192C;
+                border-radius: 10px;
+                border: 2px solid #1E7D32;
+            }
+           
+            /* تنسيق التنبيهات */
+            .stAlert {
+                border-radius: 10px;
+                border-right: 5px solid #1E7D32; /* خط أخضر على اليمين */
             }
             </style>
             """
